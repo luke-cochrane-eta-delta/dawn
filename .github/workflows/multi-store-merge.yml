@@ -1,0 +1,30 @@
+name: "Multi Store Merge"
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  merge-into-stores:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Merge main -> uk
+        uses: jamiemccleave/shopify-multi-store-deployer@v2.0
+        with:
+          from_branch: "main"
+          to_branch: "uk"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge main -> us
+        uses: jamiemccleave/shopify-multi-store-deployer@v2.0
+        with:
+          from_branch: "main"
+          to_branch: "us"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
